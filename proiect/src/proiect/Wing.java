@@ -9,6 +9,11 @@ public class Wing extends Player {
 		this.three_pointers_per_game = p_3ppg;
 	}
 	
+	public Wing(String line) {
+		super(line.split(",")[0], Integer.parseInt(line.split(",")[1]), Integer.parseInt(line.split(",")[2]), null);
+		this.three_pointers_per_game = Double.parseDouble(line.split(",")[4]);
+	}
+	
 	public void printPlayerInfo() {
 		super.printPlayerInfo();
 		System.out.println("Assists per game: " + three_pointers_per_game);

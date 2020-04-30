@@ -1,5 +1,7 @@
 package proiect;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -11,6 +13,15 @@ public class Team {
 	public Team(String t_name, String t_abbr) {
 		this.team_name = t_name;
 		this.team_abbr = t_abbr;
+		this.team_players = new ArrayList<Player>();
+	}
+	
+	public Team(String line) {
+		String[] values = line.split(",");
+		if(values.length == 2) {
+			this.team_name = values[0];
+			this.team_abbr = values[1];
+		}
 		this.team_players = new ArrayList<Player>();
 	}
 	
@@ -39,5 +50,14 @@ public class Team {
 			p.printPlayerInfo();
 			
 		}
-	}	
+	}
+	
+	public void printTeamInfoToCSV(String filepath) throws Exception {
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true))) {
+			writer.append(this.team_name + ", " + this.team_abbr + "\n");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

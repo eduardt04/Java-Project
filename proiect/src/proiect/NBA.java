@@ -6,10 +6,19 @@ import java.util.Vector;
 
 public class NBA {
 	
-	private Vector<Team> teams;
+	private ArrayList<Team> teams;
+	private ArrayList<Player> players;
 	
 	public NBA() {
-		this.teams = new Vector<Team>();
+		try {
+			teams = TeamsCSVReader.getInstance().readData("src/proiect/teams.csv", Team.class); 	
+			players = PlayersCSVReader.getInstance().readData("src/proiect/players.csv", Player.class);
+		}
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void addTeam(Team t) {
@@ -20,23 +29,8 @@ public class NBA {
 		return teams.size();
 	}
 	
-	public ArrayList<Player> getAllPlayers() {
-		
-		ArrayList<Player> all_players = new ArrayList<Player>();
-		Iterator<Team> teamsItr = this.teams.iterator();
-		
-		while(teamsItr.hasNext()) {
-			
-			Team t = teamsItr.next();
-			Iterator<Player> playersItr = t.getPlayers().iterator();
-			
-			while(playersItr.hasNext()) {
-				Player p = playersItr.next();
-				all_players.add(p);
-			}
-		}
-		
-		return all_players;
+	public ArrayList<Player> getPlayers() {
+		return this.players;
 	}
 	
 	public void printTeams() {
@@ -48,11 +42,11 @@ public class NBA {
 		
 		while(teamsItr.hasNext()) {
 			Team t = teamsItr.next();
-			System.out.println(t.getTeamName() + "-" + t.getTeamAbbr());
+			System.out.println(t.getTeamName() + " - " + t.getTeamAbbr());
 		}
 	}
 	
-	public void printTeamsWithPlayers() {
+	public void printTeamsToCSV(String filepath) throws Exception {
 		
 		if(teams.size() == 0)
 			System.out.println("Currently there are no teams created.");
@@ -61,11 +55,9 @@ public class NBA {
 		
 		while(teamsItr.hasNext()) {
 			Team t = teamsItr.next();
-			System.out.println(t.getTeamName() + "-" + t.getTeamAbbr());
-			t.printTeamPlayers();
-			System.out.println("\n");
-			
+			t.printTeamInfoToCSV(filepath);
 		}
+		System.out.println("Teams have been shown in output.csv!\n");
 	}
 	
 	public Team getTeamByAbbr(String abbr) {

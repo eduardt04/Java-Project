@@ -1,5 +1,7 @@
 package proiect;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,6 +13,13 @@ public class Menu {
 	
 	public Menu() {
 		this.championship = new NBA();
+		/// clear content of output CSV before running.
+		try {
+			FileWriter fw = new FileWriter("src/proiect/output.csv", false);
+			fw.write("");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}	
 	
 	public void Run() {
@@ -23,7 +32,7 @@ public class Menu {
 			System.out.println("Choose which feature you want to use: (use the code after ->) ");
 			System.out.println("Add a team -> addteam");
 			System.out.println("Add a player -> addplayer");
-			System.out.println("Show all teams -> showteams");
+			System.out.println("Show all teams(to CSV) -> showteams");
 			System.out.println("Print players alphabetically->prtalph");
 			System.out.println("Exit the menu -> exit");
 			
@@ -103,14 +112,22 @@ public class Menu {
 					break;
 				
 				case "showteams":
-					championship.printTeamsWithPlayers();
+					try {
+						championship.printTeamsToCSV("src/proiect/output.csv");
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					break;
 					
 				case "prtalph":
-					ArrayList<Player> players = championship.getAllPlayers();
+					ArrayList<Player> players = championship.getPlayers();
 					Collections.sort(players, Comparator.comparing(Player::getName));
-					for(Player p : players) 
-						System.out.println(p.getName());
+					for(Player p : players)
+						try {
+							p.printPlayerInfoToCSV("src/proiect/output.csv");
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					break;
 					
 				case "exit":
@@ -119,11 +136,8 @@ public class Menu {
 					
 				default:
 					System.out.println("This is not a valid feature. Please try again.");
-			}
-			
+			}		
 		}
 		input.close();
-
 	}
-	
 }
