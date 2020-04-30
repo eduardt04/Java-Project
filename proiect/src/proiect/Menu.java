@@ -33,7 +33,7 @@ public class Menu {
 			System.out.println("Add a team -> addteam");
 			System.out.println("Add a player -> addplayer");
 			System.out.println("Show all teams(to CSV) -> showteams");
-			System.out.println("Print players alphabetically->prtalph");
+			System.out.println("Print players alphabetically(to CSV) -> prtalph");
 			System.out.println("Exit the menu -> exit");
 			
 			System.out.println("Choose an option: ");

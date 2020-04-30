@@ -33,7 +33,6 @@ public class PlayersCSVReader {
 		try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII)) {
 			String line = br.readLine();
 			while(line != null) {
-				System.out.println(line);
 				String[] data = line.split(",");
 				Constructor<T> constructor = (Constructor<T>) Player.class.getConstructor(String.class);
 				
