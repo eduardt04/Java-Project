@@ -36,30 +36,22 @@ public class PlayersCSVReader {
 				System.out.println(line);
 				String[] data = line.split(",");
 				Constructor<T> constructor = (Constructor<T>) Player.class.getConstructor(String.class);
-				System.out.println(data[3]);
+				
 				switch(data[3]) {
 					case "Center":
 						constructor = (Constructor<T>) Center.class.getConstructor(String.class);
-						System.out.println(1);
-
 						break;
 					
 					case "Forward":
 						constructor = (Constructor<T>) Forward.class.getConstructor(String.class);
-						System.out.println(2);
-
 						break;
 					
 					case "PointGuard":
 						constructor = (Constructor<T>) PointGuard.class.getConstructor(String.class);
-						System.out.println(3);
-
 						break;
 				
 					case "Wing":
 						constructor = (Constructor<T>) Wing.class.getConstructor(String.class);
-						System.out.println(4);
-
 						break;
 				}
 				
